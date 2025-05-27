@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Open Redirect Scanner</title>
+</head>
+<body>
+  <h1>Open Redirect Scanner</h1>
+  <form method="post">
+    <label>URL base:</label><br>
+    <input type="text" name="url" size="60" required><br><br>
+
+    <label>Parâmetros para testar:</label><br>
+    {% for param in params %}
+      <input type="checkbox" name="params" value="{{ param }}" checked> {{ param }}
+    {% endfor %}<br><br>
+
+    <label><input type="checkbox" name="proxy"> Usar proxy (127.0.0.1:8080)</label><br><br>
+
+    <button type="submit">Iniciar Teste</button>
+  </form>
+
+  {% if results %}
+    <h2>Resultados:</h2>
+    <table border="1" cellpadding="5">
+      <tr><th>URL Testada</th><th>Parâmetro</th><th>Payload</th><th>URL Final</th><th>Status</th></tr>
+      {% for row in results %}
+        <tr>
+          {% for item in row %}
+            <td>{{ item }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+    <br>
+    <a href="/download">Baixar CSV</a>
+  {% endif %}
+</body>
+</html>
